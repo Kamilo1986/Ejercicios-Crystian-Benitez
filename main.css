@@ -1,0 +1,139 @@
+.container1 {
+  background-color: #40b336;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+.container2 {
+  background-color: #51eaf0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+h1 {
+  color: #0a0a0a;
+  margin-bottom: 20px;
+}
+
+.conversion {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* //////// */
+
+.container3 {
+  background-color: yellow;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.note-form {
+  margin-bottom: 20px;
+}
+
+.note-form input,
+.note-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.note-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.note-form button:hover {
+  background-color: #f72408;
+}
+
+.notes-container {
+  text-align: left;
+}
+
+.note-card {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.note-card button {
+  background-color: #0b8a75;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  float: right;
+}
+
+.note-card button:hover {
+  background-color: #c82333;
+}
+
+.message {
+  margin-top: 10px;
+  color: #777;
+}
+
+.filters {
+  margin-top: 20px;
+}
+
+.filters input[type="text"],
+.filters input[type="checkbox"] {
+  margin-right: 10px;
+  padding: 8px;
+}
