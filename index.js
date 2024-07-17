@@ -26,126 +26,113 @@ function clasificarIMC(imc) {
     }
 }
 function convertToUSD() {
-    let copAmount = document.getElementById('copInput').value;
-    let usdRate = 0.00027; 
-    let usdAmount = copAmount * usdRate;
-    document.getElementById('usdResult').innerText = `${copAmount} COP = ${usdAmount.toFixed(2)} USD`;
+    let PesoColombiano = document.getElementById('copInput').value;
+    let Dolar = 0.00027; 
+    let dolarAmericano = PesoColombiano * Dolar;
+    document.getElementById('dolarResultado').innerText = `${PesoColombiano} COP = ${dolarAmericano.toFixed(2)} USD`;
 }
 function convertToCOP() {
-    let usdAmount = document.getElementById('usdInput').value;
-    let copRate = 3963.65; 
-    let copAmount = usdAmount * copRate;
-    document.getElementById('copResult').innerText = `${usdAmount} USD = ${copAmount.toFixed(2)} COP`;
+    let dolarAmericano = document.getElementById('dolarInput').value;
+    let Pesoc = 3963.65; 
+    let PesoColombiano = dolarAmericano * Pesoc;
+    document.getElementById('copResultado').innerText = `${dolarAmericano} USD = ${PesoColombiano.toFixed(2)} COP`;
 }
 
-///////////////////////
-
-// Paso b: agrege notas iniciales
-let notes = [
-    { id: 1, title: "sacar la basura", text: "mi mama me va pegar si no lo hago", realizada: false },
-    { id: 2, title: "tender la cama ", text: "premio de la navidad", realizada: true }
+let notas = [
+    { id: 1, titulo: "sacar la basura", texto: "mi mama me va pegar si no lo hago", realizada: false },
+    { id: 2, titulo: "tender la cama", texto: "premio de la navidad", realizada: true }
 ];
-console.log(notes);
-// Paso c: variable para el id de la nota
-let idGlobal = notes.length > 0 ? notes[notes.length - 1].id : 0;
+console.log(notas);
 
-// Obtener elementos del DOM
-let notesContainer = document.getElementById('notesContainer');
-let noteTitleInput = document.getElementById('noteTitle');
-let noteTextInput = document.getElementById('noteText');
-let messageDiv = document.getElementById('message');
-let searchTextInput = document.getElementById('searchText');
-let filterDoneCheckbox = document.getElementById('filterDone');
+let idGlobal = notas.length > 0 ? notas[notas.length - 1].id : 0;
 
-// Paso e: Función para pintar las notas en forma de tarjetas
-function pintarnotas() {
-    notesContainer.innerHTML = '';
-    if (notes.length === 0) {
-        messageDiv.innerText = "NO HAY NOTAS PARA MOSTRAR";
+let contenedorNotas = document.getElementById('notasc');
+let entradaTituloNota = document.getElementById('titulo3');
+let entradaTextoNota = document.getElementById('texto3');
+let divMensaje = document.getElementById('mensaje');
+let entradaTextoBusqueda = document.getElementById('Buscarnotas');
+let checkboxFiltrarRealizadas = document.getElementById('tarjetasrealizadas');
+
+
+
+function agregarNota(titulo, texto) {
+    idGlobal++;
+    notas.push({ id: idGlobal, titulo: titulo, texto: texto, realizada: false });
+}
+
+
+function guardarNota() {
+    let titulo = entradaTituloNota.value.trim();
+    let texto = entradaTextoNota.value.trim();
+    if (titulo !== '' && texto !== '') {
+        agregarNota(titulo, texto);
+        pintarNotas();
+        entradaTituloNota.value = '';
+        entradaTextoNota.value = '';
+        divMensaje.innerText = '';
     } else {
-        notes.forEach(note => {
-            let noteCard = document.createElement('div');
-            noteCard.classList.add('note-card');
-            noteCard.innerHTML = `
-                <h3>${note.title}</h3>
-                <p>${note.text}</p>
-                <input type="checkbox" onclick="toggleDone(${note.id})" ${note.realizada ? 'checked' : ''}>
-                <button onclick="deleteNote(${note.id})">Borrar nota</button>
+        divMensaje.innerText = 'Por favor completa todos los campos';
+    }
+}
+function pintarNotas() {
+    contenedorNotas.innerHTML = '';
+    if (notas.length === 0) {
+        divMensaje.innerText = "NO HAY NOTAS PARA MOSTRAR";
+    } else {
+        notas.forEach(nota => {
+            let tarjetaNota = document.createElement('div');
+            tarjetaNota.classList.add('note-card');
+            tarjetaNota.innerHTML = `
+                <h3>${nota.titulo}</h3>
+                <p>${nota.texto}</p>
+                <input type="checkbox" onclick="toggleRealizada(${nota.id})" ${nota.realizada ? 'checked' : ''}>
+                <button onclick="borrarNota(${nota.id})">Borrar nota</button>
             `;
-            notesContainer.appendChild(noteCard);
+            contenedorNotas.appendChild(tarjetaNota);
         });
     }
 }
 
-// Pintar las notas inicialmente
-pintarnotas();
-
-// Paso f: Función para agregar una nueva nota
-function addNote(title, text) {
-    idGlobal++;
-    notes.push({ id: idGlobal, title: title, text: text, realizada: false });
+pintarNotas();
+function borrarNota(id) {
+    notas = notas.filter(nota => nota.id !== id);
+    pintarNotas();
 }
 
-// Paso h: Función para guardar la nota desde el formulario
-function saveNote() {
-    let title = noteTitleInput.value.trim();
-   let text = noteTextInput.value.trim();
-    if (title !== '' && text !== '') {
-        addNote(title, text);
-        pintarnotas();
-        noteTitleInput.value = '';
-        noteTextInput.value = '';
-        messageDiv.innerText = '';
-    } else {
-        messageDiv.innerText = 'Por favor completa todos los campos';
+function toggleRealizada(id) {
+    let indiceNota = notas.findIndex(nota => nota.id === id);
+    if (indiceNota !== -1) {
+        notas[indiceNota].realizada = !notas[indiceNota].realizada;
+        pintarNotas();
     }
 }
 
-// Paso i: Función para borrar una nota
-function deleteNote(id) {
-    notes = notes.filter(note => note.id !== id);
-    pintarnotas();
+function filtrarPorRealizadas(array) {
+    return array.filter(nota => nota.realizada);
 }
 
-// Paso m: Función para marcar como realizada/no realizada una nota
-function toggleDone(id) {
-    let noteIndex = notes.findIndex(note => note.id === id);
-    if (noteIndex !== -1) {
-        notes[noteIndex].realizada = !notes[noteIndex].realizada;
-        pintarnotas();
-    }
-}
-
-// Paso q: Función para filtrar por estado realizada
-function filterByDone(array) {
-    return array.filter(note => note.realizada);
-}
-
-// Paso p: Función para filtrar por texto
-function filterByText(array, text) {
-    if (!text) return array;
-    text = text.trim().toLowerCase();
-    return array.filter(note => 
-        note.title.toLowerCase().includes(text) || 
-        note.text.toLowerCase().includes(text)
+function filtrarPorTexto(array, texto) {
+    if (!texto) return array;
+    texto = texto.trim().toLowerCase();
+    return array.filter(nota => 
+        nota.titulo.toLowerCase().includes(texto) || 
+        nota.texto.toLowerCase().includes(texto)
     );
 }
 
-// Manejar cambios en los filtros
-searchTextInput.addEventListener('input', applyFilters);
-filterDoneCheckbox.addEventListener('change', applyFilters);
+entradaTextoBusqueda.addEventListener('input', aplicarFiltros);
+checkboxFiltrarRealizadas.addEventListener('change', aplicarFiltros);
 
-// Paso r: Función para aplicar los filtros
-function applyFilters() {
-    let filteredNotes = [...notes];
-    let searchText = searchTextInput.value.trim();
-    let showDoneOnly = filterDoneCheckbox.checked;
+function aplicarFiltros() {
+    let notasFiltradas = [...notas];
+    let textoBusqueda = entradaTextoBusqueda.value.trim();
+    let mostrarSoloRealizadas = checkboxFiltrarRealizadas.checked;
     
-    filteredNotes = filterByText(filteredNotes, searchText);
-    if (showDoneOnly) {
-        filteredNotes = filterByDone(filteredNotes);
+    notasFiltradas = filtrarPorTexto(notasFiltradas, textoBusqueda);
+    if (mostrarSoloRealizadas) {
+        notasFiltradas = filtrarPorRealizadas(notasFiltradas);
     }
     
-    notes = filteredNotes;
-    pintarnotas();
+    notas = notasFiltradas;
+    pintarNotas();
 }
